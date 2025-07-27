@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",           // atau ES2020
+    "module": "CommonJS",         // atau ESNext
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false,    // ✅ PENTING!
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
