@@ -7,10 +7,10 @@ import {
   ForeignKey,
   BelongsTo,
 } from "sequelize-typescript";
-import { ClassCategory } from "./class_categories.model";
+import { CourseCategory } from "./course_categories.model";
 
-@Table({ tableName: "classes", timestamps: false })
-export class Class extends Model {
+@Table({ tableName: "courses", timestamps: true })
+export class Course extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column
@@ -22,10 +22,10 @@ export class Class extends Model {
   @Column
   description!: string;
 
-  @ForeignKey(() => ClassCategory)
+  @ForeignKey(() => CourseCategory)
   @Column
   category_id!: number;
 
-  @BelongsTo(() => ClassCategory)
-  category!: ClassCategory;
+  @BelongsTo(() => CourseCategory)
+  category!: CourseCategory;
 }

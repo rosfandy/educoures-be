@@ -1,9 +1,31 @@
 import { Request, Response } from "express";
-import { Class } from "../../models/classes.model";
+import { Course, CourseCategory } from "../../models";
+import { Op } from "sequelize";
 
 export const getAll = async (req: Request, res: Response) => {
   try {
-    const courses = await Class.findAll();
+    const { category_id, name } = req.query;
+
+    const whereClause: any = {};
+
+    if (category_id) {
+      whereClause.category_id = category_id;
+    }
+
+    if (name) {
+      whereClause.name = { [Op.like]: `%${name}%` };
+    }
+
+    const courses = await Course.findAll({
+      where: whereClause,
+      include: [
+        {
+          model: CourseCategory,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+
     res.json(courses);
   } catch (error) {
     console.error("Error getting courses:", error);
@@ -13,7 +35,7 @@ export const getAll = async (req: Request, res: Response) => {
 
 export const getById = async (req: Request, res: Response) => {
   try {
-    const course = await Class.findByPk(req.params.id);
+    const course = await Course.findByPk(req.params.id);
     if (course) {
       res.json(course);
     } else {
@@ -27,7 +49,7 @@ export const getById = async (req: Request, res: Response) => {
 
 export const update = async (req: Request, res: Response) => {
   try {
-    const course = await Class.findByPk(req.params.id);
+    const course = await Course.findByPk(req.params.id);
     if (course) {
       await course.update(req.body);
       res.json(course);
@@ -42,7 +64,7 @@ export const update = async (req: Request, res: Response) => {
 
 export const create = async (req: Request, res: Response) => {
   try {
-    const course = await Class.create(req.body);
+    const course = await Course.create(req.body);
     res.status(201).json(course);
   } catch (error) {
     console.error("Error creating course:", error);
@@ -52,7 +74,7 @@ export const create = async (req: Request, res: Response) => {
 
 export const destroy = async (req: Request, res: Response) => {
   try {
-    const course = await Class.findByPk(req.params.id);
+    const course = await Course.findByPk(req.params.id);
     if (course) {
       await course.destroy();
       res.sendStatus(204);

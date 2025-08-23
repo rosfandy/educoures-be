@@ -1,13 +1,13 @@
-import { ClassCategory } from "../models/class_categories.model";
+import { CourseCategory } from "../models";
 
 export async function seedCategories() {
-  const count = await ClassCategory.count();
+  const count = await CourseCategory.count();
   if (count > 0) {
     console.log("🔁 Categories already seeded");
     return;
   }
 
-  await ClassCategory.bulkCreate([
+  await CourseCategory.bulkCreate([
     { name: "Frontend" },
     { name: "Backend" },
     { name: "DevOps" },

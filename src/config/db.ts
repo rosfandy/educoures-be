@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { Sequelize } from "sequelize-typescript";
-import { Class } from "../models/classes.model";
-import { ClassCategory } from "../models/class_categories.model";
+import { Course, CourseCategory, User } from "../models";
 
 const dbDir = path.resolve(__dirname, "../db");
 if (!fs.existsSync(dbDir)) {
@@ -12,5 +11,5 @@ if (!fs.existsSync(dbDir)) {
 export const sequelize = new Sequelize({
   dialect: "sqlite",
   storage: path.join(dbDir, "db.sqlite"),
-  models: [Class, ClassCategory],
+  models: [Course, CourseCategory, User],
 });

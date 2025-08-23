@@ -6,10 +6,10 @@ import {
   AutoIncrement,
   HasMany,
 } from "sequelize-typescript";
-import { Class } from "./classes.model";
+import { Course } from "./courses.model";
 
-@Table({ tableName: "class_categories", timestamps: false })
-export class ClassCategory extends Model {
+@Table({ tableName: "course_categories", timestamps: true })
+export class CourseCategory extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column
@@ -18,6 +18,6 @@ export class ClassCategory extends Model {
   @Column
   name!: string;
 
-  @HasMany(() => Class)
-  classes!: Class[];
+  @HasMany(() => Course)
+  classes!: Course[];
 }
