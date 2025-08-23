@@ -6,11 +6,6 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const createTransporter = () => {
-  console.log("smtp host: ", process.env.SMTP_HOST);
-  console.log("smtp port: ", process.env.SMTP_PORT);
-  console.log("smtp user: ", process.env.SMTP_USER);
-  console.log("smtp pass: ", process.env.SMTP_PASS);
-
   return nodemailer.createTransport({
     host: process.env.SMTP_HOST || "smtp.gmail.com",
     port: parseInt(process.env.SMTP_PORT || "587"),
@@ -35,7 +30,7 @@ export const sendVerificationEmail = async (
     const transporter = createTransporter();
     const verificationLink = `${
       process.env.VERIFY_EMAIL_URL || "http://localhost:3000"
-    }/verify-email?token=${token}`;
+    }?token=${token}`;
 
     const mailOptions = {
       from: {
